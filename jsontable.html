@@ -11,9 +11,9 @@
 
 <table class="table table-striped">
     <tr  class="bg-info">
-        <th>Name</th>
-        <th>Age</th>
-        <th>Birthday</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>email id</th>
     </tr>
 
     <tbody id="myTable">
@@ -22,32 +22,34 @@
 </table>
 
 <script>
-	var myArray = [
-	    {'name':'Michael', 'age':'30', 'birthdate':'11/10/1989'},
-	    {'name':'Mila', 'age':'32', 'birthdate':'10/1/1989'},
-	    {'name':'Paul', 'age':'29', 'birthdate':'10/14/1990'},
-	    {'name':'Dennis', 'age':'25', 'birthdate':'11/29/1993'},
-	    {'name':'Tim', 'age':'27', 'birthdate':'3/12/1991'},
-	    {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
-	]
+	var myArray = []
+
+$.ajax({
+	method:'GET',
+	url:'https://reqres.in/api/users',
 	
-	buildTable(myArray)
+	success: function(response){
+		//within an array named data the objects are stored
+		myArray = response.data,
+		buildtable(myArray);
+		console.log(response);
+		
+	}
+})
 
-
-
-	function buildTable(data){
+	function buildtable(data){
 		var table = document.getElementById('myTable')
-
-		for (var i = 0; i < data.length; i++){
+		for(let i=0; i<data.length; i++){
+			//accessing first the object within the array using index data[i]. and then the elemnet(in the response)
 			var row = `<tr>
-							<td>${data[i].name}</td>
-							<td>${data[i].age}</td>
-							<td>${data[i].birthdate}</td>
-					  </tr>`
-			table.innerHTML += row
-
+							<td>${data[i].first_name}</td>
+							<td>${data[i].last_name}</td>
+							<td>${data[i].email}</td>
+						</tr>`
+					table.innerHTML += row
 
 		}
 	}
+	
 
 </script>
